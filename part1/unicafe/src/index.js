@@ -7,6 +7,10 @@ const Button = ({handleClick, text}) => (
   </button>
 )
 
+const Statistic = ({name, value}) => (
+  <div>{name} {value}</div>
+)
+
 // a proper place to define a component
 const Statistics = ({good, neutral, bad}) => {
   const all = good + neutral + bad
@@ -25,17 +29,15 @@ const Statistics = ({good, neutral, bad}) => {
   return(
     <div>
       <h1>statistics</h1>
-      <div>good {good}</div>
-      <div>neutral {neutral}</div>
-      <div>bad {bad}</div>
-      <div>all {all}</div>
-      <div>average {average}</div>
-      <div>positive {positive} %</div>
+      <Statistic name='good' value={good}></Statistic>
+      <Statistic name='neutral' value={neutral}></Statistic>
+      <Statistic name='bad' value={bad}></Statistic>
+      <Statistic name='all' value={all}></Statistic>
+      <Statistic name='average' value={average}></Statistic>
+      <Statistic name='positive' value={positive + '%'}></Statistic>
     </div> 
   )
 }
-
-const Header = (props) => <h1>{props.title}</h1>
 
 const App = () => {
   // save clicks of each button to its own state
@@ -43,15 +45,13 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
-  const title = 'give feedback'
-
   const handleGoodClick = () => setGood(good + 1)
   const handleNeutralClick = () => setNeutral(neutral + 1)
   const handleBadClick = () => setBad(bad + 1)
 
   return (
     <div>
-      <Header title={title}></Header>
+      <h1>give feedback</h1>
       <Button handleClick={handleGoodClick} text='good'></Button>
       <Button handleClick={handleNeutralClick} text='neutral'></Button>
       <Button handleClick={handleBadClick} text='bad'></Button>
