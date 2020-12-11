@@ -7,12 +7,23 @@ const Button = ({handleClick, text}) => (
   </button>
 )
 
-const Display = (props) => {
-  if (props.name === 'positive'){
-    return(<div>{props.name} {props.value} %</div>)
-  }
+// a proper place to define a component
+const Statistics = ({good, neutral, bad}) => {
+  const all = good + neutral + bad
+  const average = (good*1 + neutral*0 + bad*(-1))/all
+  const positive = 100*good/all
 
-  return(<div>{props.name} {props.value}</div>)
+  return(
+    <div>
+      <h1>statistics</h1>
+      <div>good {good}</div>
+      <div>neutral {neutral}</div>
+      <div>bad {bad}</div>
+      <div>all {all}</div>
+      <div>average {average}</div>
+      <div>positive {positive} %</div>
+    </div> 
+  )
 }
 
 const Header = (props) => <h1>{props.title}</h1>
@@ -24,15 +35,10 @@ const App = () => {
   const [bad, setBad] = useState(0)
 
   const title = 'give feedback'
-  const display = 'statistics'
 
   const handleGoodClick = () => setGood(good + 1)
   const handleNeutralClick = () => setNeutral(neutral + 1)
   const handleBadClick = () => setBad(bad + 1)
-
-  const all = good + neutral + bad
-  const average = (good*1 + neutral*0 + bad*(-1))/all
-  const positive = 100*good/all
 
   return (
     <div>
@@ -40,13 +46,7 @@ const App = () => {
       <Button handleClick={handleGoodClick} text='good'></Button>
       <Button handleClick={handleNeutralClick} text='neutral'></Button>
       <Button handleClick={handleBadClick} text='bad'></Button>
-      <Header title={display}></Header>
-      <Display name='good' value={good}></Display>
-      <Display name='neutral' value={neutral}></Display>
-      <Display name='bad' value={bad}></Display>
-      <Display name='all' value={all}></Display>
-      <Display name='average' value={average}></Display>
-      <Display name='positive' value={positive}></Display>
+      <Statistics good={good} neutral={neutral} bad={bad}></Statistics>
     </div>
   )
 }
