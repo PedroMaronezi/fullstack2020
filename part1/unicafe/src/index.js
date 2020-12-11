@@ -8,7 +8,10 @@ const Button = ({handleClick, text}) => (
 )
 
 const Statistic = ({name, value}) => (
-  <div>{name} {value}</div>
+  <tr>
+    <td>{name}</td>
+    <td>{value}</td>
+  </tr>
 )
 
 // a proper place to define a component
@@ -21,7 +24,7 @@ const Statistics = ({good, neutral, bad}) => {
     return(
       <div>
         <h1>statistics</h1>
-        <div>No feedback given</div>
+        <p>No feedback given</p>
       </div>
     )
   } 
@@ -29,12 +32,16 @@ const Statistics = ({good, neutral, bad}) => {
   return(
     <div>
       <h1>statistics</h1>
-      <Statistic name='good' value={good}></Statistic>
-      <Statistic name='neutral' value={neutral}></Statistic>
-      <Statistic name='bad' value={bad}></Statistic>
-      <Statistic name='all' value={all}></Statistic>
-      <Statistic name='average' value={average}></Statistic>
-      <Statistic name='positive' value={positive + '%'}></Statistic>
+      <table>
+        <tbody>
+          <Statistic name='good' value={good}></Statistic>
+          <Statistic name='neutral' value={neutral}></Statistic>
+          <Statistic name='bad' value={bad}></Statistic>
+          <Statistic name='all' value={all}></Statistic>
+          <Statistic name='average' value={average}></Statistic>
+          <Statistic name='positive' value={positive + '%'}></Statistic>
+        </tbody>
+      </table>
     </div> 
   )
 }
