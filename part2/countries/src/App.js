@@ -18,6 +18,7 @@ const App = () => {
   }, [])
 
   const handleFilterChange = (event) => setFilterCountry(event.target.value)
+  const handleShowButton = (name) =>  setFilterCountry(name)
 
   const filteredCountries = countries.filter(country => 
     country.name.toLowerCase().includes(filterCountry.toLowerCase())
@@ -26,7 +27,7 @@ const App = () => {
   return (
     <div>
       <Filter value={filterCountry} handleChange={handleFilterChange} />
-      <QueryData countries={filteredCountries} />
+      <QueryData countries={filteredCountries} handleClick={handleShowButton}/>
     </div>
   )
 }

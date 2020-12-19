@@ -1,7 +1,7 @@
 import React from 'react';
 import Country from './Country';
 
-const QueryData = ({ countries }) => {
+const QueryData = ({ countries, handleClick }) => {
     console.log('# of countries:', countries.length);
 
     if(countries.length > 10){
@@ -11,7 +11,11 @@ const QueryData = ({ countries }) => {
     } else if(countries.length > 1) {
         return(
             <div>
-                {countries.map(country => <div key={country.name}>{country.name}</div>)}
+                {countries.map(country => 
+                <div key={country.name}>
+                    {country.name}
+                    <button key={country.name} onClick={() => handleClick(country.name)}>Show</button>
+                </div>)}
             </div>
         )
     } else if(countries.length === 1) {
