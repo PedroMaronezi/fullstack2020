@@ -3,12 +3,24 @@ import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
 import personsService from './services/persons';
+import Notification from './components/Notification';
 
 const App = () => {
   const [ persons, setPersons ] = useState([]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ filterName, setFilterName ] = useState('')
+  const [ notificationMessage, setNotificationMessage ] = useState(null)
+  const [ notificationStyle, setNotificationStyle ] = useState(null)
+
+  const success = {
+    color: 'green',
+    fontSize: 20,
+    borderStyle: 'solid',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+  }
 
 
   const addPerson = (event) => {
@@ -30,6 +42,9 @@ const App = () => {
             setPersons(persons.map(person => person.id === p.id ? response : person))
             setNewName('')
             setNewNumber('')
+            setNotificationMessage(`Updated ${response.name}`)
+            setNotificationStyle(success)
+            setTimeout(() => setNotificationMessage(null), 3000)
           })
       }
 
@@ -45,6 +60,9 @@ const App = () => {
           setPersons(persons.concat(createdPerson))
           setNewName('')
           setNewNumber('')
+          setNotificationMessage(`Added ${createdPerson.name}`)
+          setNotificationStyle(success)
+          setTimeout(() => setNotificationMessage(null), 3000)
         })
     }
   }
@@ -83,6 +101,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notificationMessage} style={notificationStyle} />
       <Filter value={filterName} handleChange={handleFilterChange} />
       <h2>Add a new</h2>
       <PersonForm handleSubmit={addPerson} newName={newName} handleNameChange={handleNameChange}
