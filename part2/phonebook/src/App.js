@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
-import axios from 'axios';
+import personsService from './services/persons';
 
 const App = () => {
   const [ persons, setPersons ] = useState([]) 
@@ -12,11 +12,11 @@ const App = () => {
 
   // Fetch data from the json-server
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
+    personsService
+      .getAll()
+      .then(initialPeople => {
         console.log('promised resolved...')
-        setPersons(response.data)
+        setPersons(initialPeople)
       })
   }, [])
 
@@ -34,9 +34,13 @@ const App = () => {
         number: newNumber
       }
 
-      setPersons(persons.concat(personObject))
-      setNewName('')
-      setNewNumber('')
+      personsService
+        .create(personObject)
+        .then(createdPerson => {
+          setPersons(persons.concat(createdPerson))
+          setNewName('')
+          setNewNumber('')
+        })
     }
   }
 
