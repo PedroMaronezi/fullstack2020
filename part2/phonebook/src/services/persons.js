@@ -20,7 +20,8 @@ const deletePerson = id => {
 
 // Update an existing contact
 const update = (id, newObject) => {
-    return axios.put(`${baseUrl}/${id}`, newObject).then(response => response.data)
+    const request = axios.put(`${baseUrl}/${id}`, newObject)
+    return request.then(response => response.data)
 }
 
 const service = { getAll, create, deletePerson, update }
