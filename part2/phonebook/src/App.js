@@ -22,6 +22,15 @@ const App = () => {
     marginBottom: 10,
   }
 
+  const errorStyle = {
+    color: 'red',
+    fontSize: 20,
+    borderStyle: 'solid',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+  }
+
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -46,6 +55,12 @@ const App = () => {
             setNotificationStyle(success)
             setTimeout(() => setNotificationMessage(null), 3000)
           })
+          .catch(error => {
+            console.log(error)
+            setNotificationMessage(`Information of ${p.name} has already been removed from server`)
+            setNotificationStyle(errorStyle)
+            setTimeout(() => setNotificationMessage(null), 3000)
+          })
       }
 
     } else {
@@ -62,6 +77,12 @@ const App = () => {
           setNewNumber('')
           setNotificationMessage(`Added ${createdPerson.name}`)
           setNotificationStyle(success)
+          setTimeout(() => setNotificationMessage(null), 3000)
+        })
+        .catch(error => {
+          console.log(error)
+          setNotificationMessage(`Information of ${personObject.name} has already been removed from server`)
+          setNotificationStyle(errorStyle)
           setTimeout(() => setNotificationMessage(null), 3000)
         })
     }
