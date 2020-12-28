@@ -10,15 +10,6 @@ const App = () => {
   const [ newNumber, setNewNumber ] = useState('')
   const [ filterName, setFilterName ] = useState('')
 
-  // Fetch data from the json-server
-  useEffect(() => {
-    personsService
-      .getAll()
-      .then(initialPeople => {
-        console.log('promised resolved...')
-        setPersons(initialPeople)
-      })
-  }, [])
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -44,11 +35,36 @@ const App = () => {
     }
   }
 
+  const deletePerson = id => {
+    const p = persons.find(person => person.id === id)
+    const popUp = window.confirm(`Delete ${p.name}?`)
+
+    if(popUp){
+      personsService
+        .deletePerson(id)
+        .then(() => setPersons(persons.filter(person => person.id !== id)))
+        .catch(error => {
+          console.log(error)
+          setPersons(persons.filter(person => person.id !== id))
+        })
+    }
+  }
+
   const handleNameChange = (event) => setNewName(event.target.value)
   const handleNumberChange = (event) => setNewNumber(event.target.value)
   const handleFilterChange = (event) => setFilterName(event.target.value)
 
   const filteredPeople = persons.filter(person => person.name.toLowerCase().includes(filterName.toLowerCase()))
+
+  // Fetch data from the json-server
+  useEffect(() => {
+    personsService
+      .getAll()
+      .then(initialPeople => {
+        console.log('promised resolved...')
+        setPersons(initialPeople)
+      })
+  }, [])
 
   return (
     <div>
@@ -58,7 +74,7 @@ const App = () => {
       <PersonForm handleSubmit={addPerson} newName={newName} handleNameChange={handleNameChange}
       newNumber={newNumber} handleNumberChange={handleNumberChange} />
       <h2>Numbers</h2>
-      <Persons persons={filteredPeople} />
+      <Persons persons={filteredPeople} handleClick={deletePerson} />
     </div>
   )
 }

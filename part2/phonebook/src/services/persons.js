@@ -13,6 +13,16 @@ const create = newPerson => {
     return request.then(response => response.data)
 }
 
-const service = { getAll, create }
+// Delete an existing contact
+const deletePerson = id => {
+    return axios.delete(`${baseUrl}/${id}`)
+}
+
+// Update an existing contact
+const update = (id, newObject) => {
+    return axios.put(`${baseUrl}/${id}`, newObject).then(response => response.data)
+}
+
+const service = { getAll, create, deletePerson, update }
 
 export default service;
